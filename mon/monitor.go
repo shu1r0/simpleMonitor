@@ -32,7 +32,7 @@ type OneStat struct {
 
 func NewOneStat() (oneStat *OneStat, err error) {
 	s := OneStat{}
-	interval := time.Second
+	interval := time.Second // 1s
 
 	// timestamp
 	s.Time = time.Now().Unix()
