@@ -14,6 +14,7 @@ import (
 	"github.com/shirou/gopsutil/v3/mem"
 )
 
+// one interval stats
 type OneStat struct {
 	// Unix time
 	Time int64
@@ -30,6 +31,7 @@ type OneStat struct {
 	UsedPercent   float64
 }
 
+// monitor
 func NewOneStat() (oneStat *OneStat, err error) {
 	s := OneStat{}
 	interval := time.Second // 1s
