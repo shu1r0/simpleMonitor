@@ -10,7 +10,7 @@ import (
 
 func measureCSV() {
 	fmt.Println("monitor start")
-	filename := "log/" + strconv.FormatInt(time.Now().UnixNano(), 10) + ".csv"
+	filename := "./" + strconv.FormatInt(time.Now().UnixNano(), 10) + ".csv"
 
 	stat, _ := mon.NewOneStat()
 	s, _ := stat.CSVHead()
