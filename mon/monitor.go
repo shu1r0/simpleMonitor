@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"math"
 	"os"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -21,7 +22,7 @@ type OneStat struct {
 
 	// cpu
 	GlobalCPUPercent float64
-	CPUPercent       []float64 `csv:"CPUPercent(not support)"`
+	CPUPercent       []float64 `csv:"CPUPercent"`
 
 	// memory
 	TotalMemory   uint64
@@ -77,14 +78,41 @@ func (stat OneStat) CSV() (s string, err error) {
 	stats := []*OneStat{&stat}
 	str, err := gocsv.MarshalString(stats)
 	slice := strings.Split(str, "\n")
-	return slice[1], err
+	stat_csv := slice[1]
+
+	var new_stat []string
+	for i, s := range strings.Split(stat_csv, ",") {
+		if i == 2 {
+			for _, s := range stat.CPUPercent {
+				new_stat = append(new_stat, strconv.FormatFloat(s, 'f', -1, 64))
+			}
+		} else {
+			new_stat = append(new_stat, s)
+		}
+	}
+
+	return strings.Join(new_stat, ","), err
 }
 
 func (stat OneStat) CSVHead() (s string, err error) {
 	stats := []*OneStat{&stat}
 	str, err := gocsv.MarshalString(stats)
 	slice := strings.Split(str, "\n")
-	return slice[0], err
+	head_csv := slice[0]
+
+	var new_head []string
+	for _, s := range strings.Split(head_csv, ",") {
+		if s == "CPUPercent" {
+			for j, _ := range stat.CPUPercent {
+				h := s + "(" + strconv.Itoa(j+1) + ")"
+				new_head = append(new_head, h)
+			}
+		} else {
+			new_head = append(new_head, s)
+		}
+	}
+
+	return strings.Join(new_head, ","), err
 }
 
 func WriteLine(filename string, lines []string) error {
