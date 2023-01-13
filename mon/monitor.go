@@ -35,7 +35,7 @@ type OneStat struct {
 // monitor
 func NewOneStat() (oneStat *OneStat, err error) {
 	s := OneStat{}
-	interval := time.Second // 1s
+	interval := time.Microsecond * 500 // 0.5s
 
 	// timestamp
 	s.Time = time.Now().Unix()
