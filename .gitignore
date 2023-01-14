@@ -1,5 +1,5 @@
-log/*.csv
-log/*.txt
-log/*.log
+*.csv
+*.txt
+*.log
 
 .DS_Store
