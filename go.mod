@@ -1,4 +1,4 @@
-module simpleMonitor
+module github.com/shu1r0/simpleMonitor
 
 go 1.16
 

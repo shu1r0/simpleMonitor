@@ -1,4 +1,4 @@
-package mon
+package monitor
 
 import (
 	"encoding/json"
@@ -44,12 +44,14 @@ func NewOneStat() (oneStat *OneStat, err error) {
 	var percentWaitGroup sync.WaitGroup
 	percentWaitGroup.Add(2)
 
+	// cpu per core
 	go func(stat *OneStat, wg *sync.WaitGroup) {
 		defer wg.Done()
 		p, _ := cpu.Percent(interval, true)
 		stat.CPUPercent = p
 	}(&s, &percentWaitGroup)
 
+	// cpu global
 	go func(stat *OneStat, wg *sync.WaitGroup) {
 		defer wg.Done()
 		p, _ := cpu.Percent(interval, false)
